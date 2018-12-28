@@ -1,0 +1,75 @@
+info.app:
+  name: "@project.name@"
+  version: "@project.version@"
+
+logging.level.ar.edu.unlu.cursos: DEBUG
+logging.level.org.hibernate.type.descriptor.sql: INFO
+logging.level.org.hibernate.type: INFO
+logging.level.org.hibernate.SQL: DEBUG
+logging.level.org.springframework.web: TRACE
+
+# allow flyway to migrate/create tables on non-empty schemas
+
+management.security.enabled: false
+
+# URI: /manage/healthcheck
+endpoints:
+  health:
+    sensitive: false
+    id: healthcheck
+  info:
+    sensitive: false
+
+spring:
+  profiles.active: ${SPRING_PROFILE:local}
+  application.name: "@project.name@"
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+
+  flyway:
+    baseline-on-migrate: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        id.new_generator_mappings: true
+
+  datasource:
+    driverClassName:
+    url: jdbc:h2:mem:libros-demo;DB_CLOSE_DELAY=-1
+    username:
+    password:
+    tomcat:
+      initial-size: 1
+      max-active: 5
+      min-idle: 1
+      max-idle: 2
+      max-wait: 5000
+      test-on-borrow: true
+      min-evictable-idle-time-millis: 300000
+      validation-query: 'select 1'
+
+server:
+  error.whitelabel.enabled: false
+  servlet:
+    context-path: /
+
+---
+spring:
+  profiles: local
+
+---
+spring:
+  profiles: prod
+
+server:
+  address: 127.0.0.1
+  use-forward-headers: true
+  tomcat:
+    remote_ip_header: x-forwarded-for
+    protocol_header: x-forwarded-proto
