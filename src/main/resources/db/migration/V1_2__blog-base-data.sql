@@ -23,5 +23,5 @@ values (1,2), /* First post tag: 'real life' */
        (2,3); /* Second post tag: 'gaming' */
 
 insert into comments (id, content, id_user, id_post,created_on, modified_on)
-values (),
-       ();
+values (1,'Oh man, i wish i had the time and the will to go outdoors and exercise',2,1,'2018-12-07 21:14:32', '2018-12-07 21:14:32'),
+       (2,'Have not heard of it. I will definitely check it out.',1,2,'2018-12-07 21:14:32', '2018-12-07 21:14:32');
