@@ -4,8 +4,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -39,10 +39,10 @@ public class Post extends AuditableBaseEntity implements Serializable {
             joinColumns = @JoinColumn(name = "id_post"),
             inverseJoinColumns = @JoinColumn(name = "id_tag")
     )
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     public long getId() {
         return id;
@@ -68,14 +68,29 @@ public class Post extends AuditableBaseEntity implements Serializable {
         this.content = content;
     }
 
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @Override
     public boolean equals(Object o) {

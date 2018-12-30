@@ -1,64 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="includes/header :: header"></head>
+<head th:replace="includes/header :: header(#{title.index})"></head>
 <body>
 <main>
-    <section id="listado_posts">
-        <h1>BLOG de la UNLu</h1>
+    <nav th:replace="includes/header::navig"></nav>
+    <section class="listado-posts">
+        <h2 th:text="#{title.index}">Blog</h2>
         <th:block th:each="post:${posts}">
-            <article>
-                <h2 th:text="${post}"></h2>
+            <article class="post">
+                <h2>
+                    <span th:text="${post.title}"></span>
+                    <span class="small" th:text="#{post.by(${post.user.name})}"></span>
+                </h2>
                 <p th:text="${post.content}"></p>
+                <div class="meta-post">
+                    <span class="small" th:text="${#dates.format(post.createdOn)}"></span>
+                    <ul th:if="${not #lists.isEmpty(post.tags)}" class="tags">
+                        <li th:each="tag : ${post.tags}">
+                            <a href="#" th:text="${tag.name}">
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!--</section>-->
+                    <div>
+                        <a class="btn btn-primary"
+                           th:href="@{'/posts/' + ${post.id} + '/edit'}"
+                           th:text="#{common.edit}"> Edit
+                        </a>
+                    </div>
+                </div>
+                <section class="comments-block">
+                    <div th:each="comment:${post.comments}" class="comment" title="">
+                        <div>
+                            <b><span th:text="#{comment.userSaid(${comment.user.name})}">dart vader said:</span></b>
+                        </div>
+
+                        <p th:text="${comment.content}">
+                            comment.
+                        </p>
+                    </div>
+                    <a class="btn btn-primary"
+                       th:href="@{'/posts/'+${post.id}}"
+                       th:text="#{post.addComment}"> Add comment
+                    </a>
+                </section>
             </article>
         </th:block>
-        <?php foreach ($posts as $post) : ?>
-        <?php $datos = $post->getCamposAndValues(); ?>
-        <?php $tags = $post->getTags(); ?>
-        <?php $comments = $post->getComments(); ?>
-        <article>
-            <h2><?= $datos['title'] ?></h2>
-            <p><?= $datos['descr'] ?></p>
-            <small><?= $datos['fecha'] ?></small>
-            <?php if (!empty($tags)) : ?>
-            <h4>Tags</h4>
-            <ul>
-                <?php foreach ($tags as $tag) : ?>
-                <li><?= $tag ?></li>
-                <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
-            <div>
-                <form action="editPostControl.php" method="post">
-                    <input type="number" name="idPost" value="<?= $post->getID(); ?>" style="display: none">
-                    <button type="submit"> Editar</button>
-                </form>
-            </div>
-
-            <section>
-                <h3>Comentarios</h3>
-                <?php if ($comments) : ?>
-                <?php foreach ($comments as $comm) : ?>
-                <div class="comment" title="">
-                    <h3>Author: <?= $comm->getAuthor() ?></h3>
-                    <p> <?= $comm->getBody() ?> </p>
-                </div>
-                <?php endforeach; ?>
-                <?php endif; ?>
-                <form action="addComment.php" method="post">
-                    <label for="">Author: </label>
-                    <input type="text" name="author"> <br>
-                    <input class="paragraphInput" type="text" name="body"> <br>
-                    <input type="number" name="idPost" value="<?= $post->getID(); ?>" style="display: none">
-                    <button type="submit"> Agregar Comentario</button>
-                </form>
-            </section>
-
-        </article>
-        <?php endforeach; ?>
-        <?php else : ?>
-        <p>No hay posts cargados</p>
-        <?php endif; ?>
     </section>
+    <div th:replace="includes/footer::footer"></div>
 </main>
 </body>
 </html>

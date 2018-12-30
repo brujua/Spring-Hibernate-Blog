@@ -21,7 +21,7 @@ public class Comment extends AuditableBaseEntity implements Serializable {
     private User user;
 
     @JoinColumn(name = "id_post", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false, fetch = FetchType.LAZY)
     private Post post;
 
     @Basic(optional = false)

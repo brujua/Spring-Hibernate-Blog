@@ -1,36 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="includes/header :: header(title = #{title.index})">
-    <title th:text="#{title.index}">Damas - Inicio</title>
+    <title th:text="#{title.index}">Blog index</title>
 </head>
 
 <body>
 <div class="container">
     <nav th:replace="includes/header :: navig"></nav>
-
-    <div class="card">
-
-        <div class="card-header">
-            <h1 class="card-title" th:text="#{header.startPage}">Página de inicio</h1>
-        </div>
-
-        <div class="card-body">
-            <div class="container">
-                <ul>
-                    <li>
-                        <a href="partidas.html"
-                           th:href="@{partidas}"
-                           th:text="#{header.matchesCrud}">Partidas</a>
-                    </li>
-                    <li>
-                        <a href="usuarios.html"
-                           th:href="@{usuarios}"
-                           th:text="#{header.usersCrud}">Usuarios</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div th:replace="includes/footer :: footer"></div>
