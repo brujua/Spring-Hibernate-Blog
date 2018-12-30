@@ -6,7 +6,6 @@ import ar.edu.unlu.cursos.spring.m06.repos.UsersRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,8 +25,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public List<User> searchByName(String name) {
-        return usersRepository.findByNameContaining(name);
+    public Optional<User> searchByName(String name) {
+        return usersRepository.findByName(name);
     }
 
     @Override

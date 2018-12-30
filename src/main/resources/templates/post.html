@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="includes/header :: header(#{title.index})"></head>
+<body>
+<main>
+    <nav th:replace="includes/header::navig"></nav>
+
+    <article class="post">
+        <h2>
+            <span th:text="${post.title}"></span>
+            <span class="small" th:text="#{post.by(${post.user.name})}"></span>
+        </h2>
+        <p th:text="${post.content}"></p>
+        <div class="meta-post">
+            <span class="small" th:text="${#dates.format(post.createdOn)}"></span>
+            <ul th:if="${not #lists.isEmpty(post.tags)}" class="tags">
+                <li th:each="tag : ${post.tags}">
+                    <a href="#" th:text="${tag.name}">
+                    </a>
+                </li>
+            </ul>
+            <div>
+                <a class="btn btn-primary"
+                   th:href="@{'/posts/' + ${post.id} + '/edit'}"
+                   th:text="#{common.edit}"> Edit
+                </a>
+            </div>
+        </div>
+        <section class="comments-block">
+            <form th:object="${commentForm}" th:action="@{'/posts/'+${post.id}+'/addComment'}" method="post">
+                <div class="container newComment">
+                    <h3 th:text="#{comment.newComment}">new comment</h3>
+                    <div class="form-group">
+                        <label for="author" th:text="#{comment.author}">author</label>
+                        <input type="text" class="form-control"
+                               th:field="*{author}"
+                               th:errorclass="is-invalid">
+                        <p th:if="${#fields.hasErrors('author')}"
+                           th:errors="*{author}"
+                           th:errorclass="text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"
+                               th:placeholder="#{comment.commentPlaceholder}"
+                               th:field="*{comment}"
+                               th:errorclass="is-invalid"/>
+                        <p th:if="${#fields.hasErrors('comment')}"
+                           th:errors="*{comment}"
+                           th:errorclass="text-danger"></p>
+                    </div>
+                    <button class="btn btn-primary" th:text="#{post.addComment}">save</button>
+                </div>
+            </form>
+
+            <div th:each="comment:${post.comments}" class="comment" title="">
+                <div>
+                    <b><span th:text="#{comment.userSaid(${comment.user.name})}">dart vader said:</span></b>
+                </div>
+
+                <p th:text="${comment.content}">
+                    comment.
+                </p>
+            </div>
+
+        </section>
+    </article>
+
+    <div th:replace="includes/footer::footer"></div>
+</main>
+</body>
+</html>

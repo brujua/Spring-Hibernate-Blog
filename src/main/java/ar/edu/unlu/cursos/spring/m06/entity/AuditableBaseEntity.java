@@ -22,7 +22,7 @@ public class AuditableBaseEntity {
         return createdOn;
     }
 
-    private void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
     }
 
@@ -30,7 +30,7 @@ public class AuditableBaseEntity {
         return modifiedOn;
     }
 
-    private void setModifiedOn(Date modifiedOn) {
+    public void setModifiedOn(Date modifiedOn) {
         this.modifiedOn = modifiedOn;
     }
 
