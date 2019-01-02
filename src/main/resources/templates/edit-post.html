@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="includes/header::header(#{post.edit})">
+</head>
+<body>
+<nav th:replace="includes/header::navig"></nav>
+<form th:object="${postForm}" method="post">
+    <div class="container">
+        <h2 th:text="#{post.edit}">edit post</h2>
+        <div class="form-group">
+            <label th:text="#{post.title}" for="title">Title:</label>
+            <input class="form-control" type="text"
+                   th:field="*{title}"
+                   th:errorclass="is-invalid">
+            <p th:if="${#fields.hasErrors('title')}"
+               th:errors="*{title}"
+               th:errorclass="text-danger"></p>
+        </div>
+        <div class="form-group">
+            <label for="content" th:text="#{post.content}">Body</label>
+            <input class="form-control" type="text" th:field="*{content}">
+            <p th:if="${#fields.hasErrors('content')}"
+               th:errors="*{content}"
+               th:errorclass="text-danger"></p>
+        </div>
+        <div class="form-group">
+            <label for="strTags" th:text="#{post.tags.comma.delimited}">tags</label>
+            <input class="form-control" type="text" th:field="*{strTags}">
+            <p th:if="${#fields.hasErrors('strTags')}"
+               th:errors="*{strTags}"
+               th:errorclass="text-danger"></p>
+        </div>
+
+        <button class="btn btn-primary" th:text="#{common.done}">Done</button>
+
+    </div>
+
+</form>
+<div th:replace="includes/footer :: footer"></div>
+
+</body>
+</html>

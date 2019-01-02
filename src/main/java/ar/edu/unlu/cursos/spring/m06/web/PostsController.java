@@ -1,7 +1,6 @@
 package ar.edu.unlu.cursos.spring.m06.web;
 
 
-import ar.edu.unlu.cursos.spring.m06.Util.RandomString;
 import ar.edu.unlu.cursos.spring.m06.entity.Comment;
 import ar.edu.unlu.cursos.spring.m06.entity.Post;
 import ar.edu.unlu.cursos.spring.m06.entity.User;
@@ -66,22 +65,8 @@ public class PostsController {
         if (result.hasErrors()) {
             return "post";
         }
-        User user;
-        /*        TODO since there is no User validation in place, if the author introduced doesn't correspond
-        with a valid user name, we just create an user.*/
-        Optional<User> opuser = usersService.searchByName(commentForm.getAuthor());
-        Date now = new Date();
-        if (opuser.isPresent())
-            user = opuser.get();
-        else {
-            user = new User();
-            user.setMail(RandomString.generate(5) + "@gmail.com");
-            user.setPass(RandomString.generate(12));
-            user.setName(commentForm.getAuthor());
-            user.setCreatedOn(now);
-            user.setModifiedOn(now);
-            usersService.insert(user);
-        }
+        User user = usersService.byNameOrCreate(commentForm.getAuthor());
+
         Comment comment = new Comment();
         comment.setContent(commentForm.getComment());
         comment.setPost(post);
@@ -91,7 +76,36 @@ public class PostsController {
         commentsService.insert(comment);
 
 
-        model.addAttribute("commentForm", new CommentForm());
-        return "post";
+        return "redirect:/posts/" + post.getId();
+    }
+
+    @RequestMapping("/{id}/edit")
+    public String editPost(Model model, @PathVariable("id") long id) {
+        Optional<Post> oPost = postsService.searchId(id);
+        Post post = oPost.orElseThrow(NoSuchPostExistException::new);
+        model.addAttribute("post", post);
+        model.addAttribute("postForm", new PostForm(post));
+        return "edit-post";
+    }
+
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
+    public String editPost(
+            Model model,
+            @PathVariable("id") long id,
+            @ModelAttribute("postForm") @Valid PostForm postForm,
+            BindingResult result) {
+
+        Post post = postsService.searchId(id).orElseThrow(NoSuchPostExistException::new);
+
+        if (result.hasErrors()) {
+            return "edit-post";
+        }
+
+        post.setTitle(postForm.getTitle());
+        post.setTags(tagsService.getOrCreateByNameInBulk(postForm.getTags()));
+        post.setContent(postForm.getContent());
+        postsService.update(post);
+
+        return "redirect:/posts/" + post.getId();
     }
 }

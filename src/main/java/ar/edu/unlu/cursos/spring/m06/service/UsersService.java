@@ -13,6 +13,14 @@ public interface UsersService {
 
     Optional<User> searchId(Long id);
 
+    /**
+     * <b>Temporary!</b> This method will change or disappear in the future.
+     *
+     * @return a user with that name
+     */
+    //TODO remove when implementing real user session control
+    User byNameOrCreate(String name);
+
     @Transactional
     void insert(User user);
 
