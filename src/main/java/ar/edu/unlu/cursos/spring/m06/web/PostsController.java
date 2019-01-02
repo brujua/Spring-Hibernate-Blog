@@ -3,6 +3,7 @@ package ar.edu.unlu.cursos.spring.m06.web;
 
 import ar.edu.unlu.cursos.spring.m06.entity.Comment;
 import ar.edu.unlu.cursos.spring.m06.entity.Post;
+import ar.edu.unlu.cursos.spring.m06.entity.Tag;
 import ar.edu.unlu.cursos.spring.m06.entity.User;
 import ar.edu.unlu.cursos.spring.m06.service.CommentsService;
 import ar.edu.unlu.cursos.spring.m06.service.PostsService;
@@ -107,5 +108,34 @@ public class PostsController {
         postsService.update(post);
 
         return "redirect:/posts/" + post.getId();
+    }
+
+    @RequestMapping("/new")
+    public String newPost(Model model) {
+        model.addAttribute("postForm", new PostForm());
+        return "new-post";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public String newPost(Model model,
+                          @ModelAttribute("postForm") @Valid PostForm postForm,
+                          BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "new-post";
+        }
+        Post post = new Post();
+        User user = usersService.byNameOrCreate(postForm.getAuthor());
+        List<Tag> tags = tagsService.getOrCreateByNameInBulk(postForm.getTags());
+        post.setUser(user);
+        post.setTitle(postForm.getTitle());
+        post.setContent(postForm.getContent());
+        post.setTags(tags);
+        postsService.insert(post);
+
+        model.addAttribute("post", post);
+
+        return "redirect:/posts/" + post.getId();
+
     }
 }

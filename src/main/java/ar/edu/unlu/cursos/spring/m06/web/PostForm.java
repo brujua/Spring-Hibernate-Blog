@@ -11,6 +11,9 @@ import java.util.List;
 public class PostForm {
     private long id;
 
+    @Size(max = 50)
+    private String author;
+
     @NotNull
     @NotEmpty
     @Size(max = 50)
@@ -37,6 +40,13 @@ public class PostForm {
         this.strTags = tagsToStr(post.getTags());
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public long getId() {
         return id;
