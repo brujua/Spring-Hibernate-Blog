@@ -18,14 +18,17 @@
         </div>
         <div class="form-group">
             <label for="content" th:text="#{post.content}">Body</label>
-            <textarea class="form-control" type="text" th:field="*{content}" rows="5"></textarea>
+            <textarea class="form-control" type="text"
+                      th:field="*{content}" rows="5"
+                      th:errorclass="is-invalid"></textarea>
             <p th:if="${#fields.hasErrors('content')}"
                th:errors="*{content}"
                th:errorclass="text-danger"></p>
         </div>
         <div class="form-group">
             <label for="strTags" th:text="#{post.tags.comma.delimited}">tags</label>
-            <input class="form-control" type="text" th:field="*{strTags}">
+            <input class="form-control" type="text" th:field="*{strTags}"
+                   th:errorclass="is-invalid">
             <p th:if="${#fields.hasErrors('strTags')}"
                th:errors="*{strTags}"
                th:errorclass="text-danger"></p>
