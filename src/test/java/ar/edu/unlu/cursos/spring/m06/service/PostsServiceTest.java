@@ -14,6 +14,9 @@ import java.util.Optional;
 
 import static org.junit.Assert.fail;
 
+/**
+ * this tests are tightly couple with the database migration seed for convenience
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
