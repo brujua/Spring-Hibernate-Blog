@@ -29,19 +29,17 @@
                     <a class="nav-link" href="../newPost.html" th:text="#{nav.createPost}"
                        th:href="@{/posts/new}">Nuevo</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../users.html" th:text="#{nav.users}" th:href="@{/users}">Usuarios</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{header.language}">
-                        language
+                <li>
+                    <a href="#" th:href="@{/i18n(lang=en)}">
+                        <img th:src="@{/flag-uk.svg}" src="" alt="EN" th:alt="#{header.lang.eng}"
+                             style="width:40px;height:30px">
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:href="@{/i18n(lang=en)}" th:text="#{header.lang.eng}">EN</a>
-                        <a class="dropdown-item" th:href="@{/i18n(lang=es)}" th:text="#{header.lang.es}">ES</a>
-                    </div>
+                </li>
+                <li>
+                    <a href="#" th:href="@{/i18n(lang=es)}">
+                        <img th:src="@{/flag-es.svg}" src="" alt="ES" th:alt="#{header.lang.es}"
+                             style="width:40px;height:30px">
+                    </a>
                 </li>
             </ul>
         </div>
