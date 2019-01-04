@@ -20,6 +20,10 @@ public class TagsServiceImpl implements TagsService {
         this.tagsRepository = tagsRepository;
     }
 
+    @Override
+    public Optional<Tag> searchId(long id) {
+        return tagsRepository.findById(id);
+    }
 
     @Override
     public List<Tag> getOrCreateByNameInBulk(String[] tagNames) {

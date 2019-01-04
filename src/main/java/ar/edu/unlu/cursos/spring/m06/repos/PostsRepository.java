@@ -12,5 +12,8 @@ public interface PostsRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByUser(User user);
 
-    List<Post> findByTags(List<Tag> tags);
+    List<Post> findAllByOrderByCreatedOnDesc();
+
+    List<Post> findByTagsOrderByCreatedOnDesc(List<Tag> tags);
+
 }

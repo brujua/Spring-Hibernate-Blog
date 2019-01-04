@@ -7,6 +7,7 @@ import ar.edu.unlu.cursos.spring.m06.repos.PostsRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class PostsServiceImpl implements PostsService {
     public List<Post> searchByTag(Tag tag) {
         ArrayList<Tag> tags = new ArrayList<>();
         tags.add(tag);
-        return postsRepository.findByTags(tags);
+        return postsRepository.findByTagsOrderByCreatedOnDesc(tags);
     }
 
     @Override
@@ -40,19 +41,22 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public List<Post> findAll() {
-        return postsRepository.findAll();
+        return postsRepository.findAllByOrderByCreatedOnDesc();
     }
 
+    @Transactional
     @Override
     public void insert(Post post) {
         postsRepository.save(post);
     }
 
+    @Transactional
     @Override
     public void remove(Post post) {
         postsRepository.delete(post);
     }
 
+    @Transactional
     @Override
     public void update(Post post) {
         postsRepository.save(post);

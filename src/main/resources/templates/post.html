@@ -15,7 +15,7 @@
             <span class="small" th:text="${#dates.format(post.createdOn)}"></span>
             <ul th:if="${not #lists.isEmpty(post.tags)}" class="tags">
                 <li th:each="tag : ${post.tags}">
-                    <a href="#" th:text="${tag.name}">
+                    <a href="#" th:text="${tag.name}" th:href="@{'/tag/'+${tag.id}}">
                     </a>
                 </li>
             </ul>
