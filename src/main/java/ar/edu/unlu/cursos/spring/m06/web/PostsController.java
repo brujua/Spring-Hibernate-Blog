@@ -138,4 +138,14 @@ public class PostsController {
         return "redirect:/posts/" + post.getId();
 
     }
+
+    @RequestMapping(value = {"/{id}/delete"}, method = RequestMethod.POST)
+    public String deletePost(Model model, @PathVariable("id") long id) {
+        Post post = postsService.searchId(id).orElseThrow(NoSuchPostExistException::new);
+        for (Comment comment : post.getComments()) {
+            commentsService.remove(comment);
+        }
+        postsService.remove(post);
+        return "redirect:/posts";
+    }
 }

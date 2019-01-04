@@ -24,6 +24,11 @@
                    th:href="@{'/posts/' + ${post.id} + '/edit'}"
                    th:text="#{common.edit}"> Edit
                 </a>
+                <form action="" th:action="@{'/posts/'+${post.id}+'/delete'}" method="post">
+                    <button th:text="#{common.delete}" class="btn btn-primary">
+                        delete
+                    </button>
+                </form>
             </div>
         </div>
         <section class="comments-block">

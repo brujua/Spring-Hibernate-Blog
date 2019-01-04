@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="includes/header :: header(#{title.index})"></head>
+<head th:replace="includes/header :: header( title= ${tag == null} ? #{title.index} : #{title.tag(${tag.name})} )"></head>
 <body>
 <main>
     <nav th:replace="includes/header::navig"></nav>
     <section class="listado-posts">
-        <h2 th:text="#{title.index}">Blog</h2>
+        <h2 th:text="${tag == null} ? #{title.index} : #{title.tag(${tag.name})}">Blog</h2>
         <th:block th:each="post:${posts}">
             <article class="post">
                 <h2>
-                    <span th:text="${post.title}"></span>
+                    <a href="" th:href="@{'/posts/'+${post.id}}" style="color:black; text-underline-style: none">
+                        <span th:text="${post.title}"></span>
+                    </a>
                     <span class="small" th:text="#{post.by(${post.user.name})}"></span>
                 </h2>
                 <p th:text="${post.content}"></p>
@@ -22,13 +24,17 @@
                         </li>
                     </ul>
 
-                    <!--</section>-->
-                    <div>
+                    <!--<div>
                         <a class="btn btn-primary"
                            th:href="@{'/posts/' + ${post.id} + '/edit'}"
                            th:text="#{common.edit}"> Edit
                         </a>
-                    </div>
+                        <form action="" th:action="@{'/posts/'+${post.id}+'/delete'}" method="post">
+                            <button th:text="#{common.delete}" class="btn btn-primary">
+                                delete
+                            </button>
+                        </form>
+                    </div>-->
                 </div>
                 <section class="comments-block">
                     <div th:each="comment:${post.comments}" class="comment" title="">

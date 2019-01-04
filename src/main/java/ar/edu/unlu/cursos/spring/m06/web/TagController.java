@@ -31,6 +31,7 @@ public class TagController {
         Optional<Tag> oTag = tagsService.searchId(id);
         Tag tag = oTag.orElseThrow(NoSuchTagExistException::new);
         List<Post> posts = postsService.searchByTag(tag);
+        model.addAttribute("tag", tag);
         model.addAttribute("posts", posts);
         return "posts";
     }
