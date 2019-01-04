@@ -29,9 +29,9 @@
         <section class="comments-block">
             <form th:object="${commentForm}" th:action="@{'/posts/'+${post.id}+'/addComment'}" method="post">
                 <div class="container newComment">
-                    <h3 th:text="#{comment.newComment}">new comment</h3>
+                    <h5 th:text="#{comment.newComment}">new comment</h5>
                     <div class="form-group">
-                        <label for="author" th:text="#{comment.author}">author</label>
+                        <label for="author" th:text="#{comment.author}+':'">author</label>
                         <input type="text" class="form-control"
                                th:field="*{author}"
                                th:errorclass="is-invalid">
