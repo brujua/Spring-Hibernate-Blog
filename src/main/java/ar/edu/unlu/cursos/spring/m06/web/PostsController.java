@@ -46,7 +46,7 @@ public class PostsController {
         return "posts";
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(value = {"/{id}", "/{id}/addComment"})
     public String post(Model model, @PathVariable("id") long id) {
         Optional<Post> post = postsService.searchId(id);
         model.addAttribute("post", post.orElse(null));

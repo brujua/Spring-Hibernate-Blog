@@ -7,6 +7,7 @@ import ar.edu.unlu.cursos.spring.m06.repos.UsersRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
 
@@ -22,25 +23,9 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    public Optional<User> searchByMail(String mail) {
-        return usersRepository.findByMail(mail);
-    }
-
-    @Override
-    public Optional<User> searchByName(String name) {
-        return usersRepository.findByName(name);
-    }
-
-    @Override
-    public Optional<User> searchId(Long id) {
-        return usersRepository.findById(id);
-    }
-
-
-    @Override
     public User byNameOrCreate(String name) {
         User user;
-        Optional<User> opuser = usersRepository.findByMail(name);
+        Optional<User> opuser = usersRepository.findByName(name);
         Date now = new Date();
         if (opuser.isPresent())
             user = opuser.get();
@@ -56,16 +41,19 @@ public class UsersServiceImpl implements UsersService {
         return user;
     }
 
+    @Transactional
     @Override
     public void insert(User user) {
         usersRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void remove(User user) {
         usersRepository.deleteById(user.getId());
     }
 
+    @Transactional
     @Override
     public void update(User user) {
         usersRepository.save(user);

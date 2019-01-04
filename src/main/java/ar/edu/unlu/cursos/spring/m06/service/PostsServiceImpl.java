@@ -2,7 +2,6 @@ package ar.edu.unlu.cursos.spring.m06.service;
 
 import ar.edu.unlu.cursos.spring.m06.entity.Post;
 import ar.edu.unlu.cursos.spring.m06.entity.Tag;
-import ar.edu.unlu.cursos.spring.m06.entity.User;
 import ar.edu.unlu.cursos.spring.m06.repos.PostsRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,6 @@ public class PostsServiceImpl implements PostsService {
     @Inject
     public PostsServiceImpl(PostsRepository postsRepository) {
         this.postsRepository = postsRepository;
-    }
-
-    @Override
-    public List<Post> searchByUser(User user) {
-        return postsRepository.findByUser(user);
     }
 
     @Override
